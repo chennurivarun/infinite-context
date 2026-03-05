@@ -138,30 +138,63 @@ cp -r infinite-context/vault-template/ /path/to/your/obsidian/vault/YourProject/
 ### 3. Fill in your project docs
 Start with `Project Overview.md`, then `Architecture.md`, then `Design System.md`.
 
-### 4. Set up your MEMORY.md
-Use the pointer pattern from [`MEMORY.md Template.md`](vault-template/MEMORY.md%20Template.md):
+### 4. Add Obsidian pointers to your CLAUDE.md (in your repo root)
+
+This is the critical step that makes it automatic. Add these lines to your project's `CLAUDE.md`:
+
+```markdown
+## Obsidian Knowledge Base
+This project's full documentation lives in Obsidian. Before starting any task,
+read the relevant doc using the Obsidian MCP tool:
+- Architecture: `MyProject/Architecture.md`
+- Design System: `MyProject/Design System.md`
+- Gotchas: `MyProject/Gotchas.md`
+- Build Progress: `MyProject/Build/Progress.md`
+
+When you discover something new (gotcha, pattern, decision), write it back to
+the relevant Obsidian doc. The vault should grow smarter with every session.
+```
+
+This tells Claude Code: **"Your memory lives in Obsidian. Read it. Write to it."**
+
+### 5. Set up MEMORY.md with pointers (not content)
+
+Your auto-memory file should be an **index** that points to Obsidian:
+
 ```markdown
 # MyProject -- Memory
 - Stack: React + Zustand + Prisma
 - Architecture -> Obsidian: `MyProject/Architecture.md`
 - Design system -> Obsidian: `MyProject/Design System.md`
+- Build progress -> Obsidian: `MyProject/Build/Progress.md`
 - Gotcha: always quote zsh paths with parens
 ```
 
-### 5. Start coding
-Tell Claude Code:
-> "Read my project context from Obsidian at `YourProject/Project Overview.md`"
+50 lines max. Everything else lives in Obsidian (unlimited).
 
-That's it. Claude now has unlimited project context without burning chat tokens.
+### 6. Start coding -- it's automatic now
+
+Every new session:
+1. CLAUDE.md auto-loads -> sees "check Obsidian for context"
+2. MEMORY.md auto-loads -> sees pointers to Obsidian docs
+3. Claude reads relevant Obsidian docs **on demand** (only what's needed)
+4. Claude works with full project context
+5. Claude writes new knowledge back to Obsidian
+
+**The vault grows smarter with every session. That's infinite context.**
+
+> For the complete setup walkthrough with troubleshooting, see the [Setup Guide](vault-template/Setup%20Guide.md).
 
 ## What's Included
 
 ```
 vault-template/
-  How to Use This Vault.md      <- START HERE
+  Setup Guide.md                <- COMPLETE SETUP WALKTHROUGH
+  How to Use This Vault.md      <- Overview + principles
   Token Management Guide.md     <- 3-layer system, anti-patterns, token costs
   Agent Rules.md                <- 5 rules, scope templates, failure prevention
   MEMORY.md Template.md         <- How to use pointers (not storage)
+  CLAUDE.md Template.md         <- What goes in your repo's CLAUDE.md
   CLAUDE.md Template.md         <- What goes in your repo's CLAUDE.md
   Project Overview.md           <- Fill-in template
   Architecture.md               <- Fill-in template
@@ -180,11 +213,40 @@ examples/
 
 | Guide | What you'll learn |
 |-------|-------------------|
+| [Setup Guide](vault-template/Setup%20Guide.md) | **Start here** -- complete step-by-step setup with exact config files |
 | [Token Management](vault-template/Token%20Management%20Guide.md) | The 3-layer system, what goes where, anti-patterns that waste tokens |
 | [Agent Rules](vault-template/Agent%20Rules.md) | How to write agent scopes, dispatch parallel waves, prevent failures |
 | [MEMORY.md as Pointers](vault-template/MEMORY.md%20Template.md) | Turn MEMORY.md into an index (not a dumping ground) |
 | [CLAUDE.md Template](vault-template/CLAUDE.md%20Template.md) | What belongs in your repo's auto-loaded instructions |
 | [Real Example](examples/cyepro-sanitized/) | How this workflow built a 180+ screen app |
+
+## How It Works (the feedback loop)
+
+```
+Session 1: You set up the project
+  Claude reads: Architecture.md, Design System.md
+  Claude discovers: "oh, this codebase has a quirk with X"
+  Claude writes: Gotchas.md -> "watch out for X"
+
+Session 2: You fix a bug
+  Claude reads: Gotchas.md -> already knows about X
+  Claude discovers: "the team decided to use Y pattern"
+  Claude writes: Decisions.md -> "chose Y because Z"
+
+Session 3: You add a feature
+  Claude reads: Decisions.md -> knows why Y was chosen
+  Claude reads: Patterns.md -> follows existing conventions
+  Claude discovers: "this API has a rate limit"
+  Claude writes: Gotchas.md -> "API rate limit: 100/min"
+
+Session 50: New developer joins
+  Claude reads: everything above
+  Has 50 sessions worth of accumulated knowledge
+  Knows every gotcha, every decision, every pattern
+  Zero ramp-up time
+```
+
+**Each session makes the vault smarter. The 50th session has 50 sessions of knowledge -- instantly.**
 
 ## Works With
 
