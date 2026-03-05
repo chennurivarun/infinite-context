@@ -2,7 +2,7 @@
 
 **Stop re-explaining your project to AI every session.** Give it a persistent brain that grows smarter with every conversation — and dispatch parallel agents that coordinate through shared knowledge, not shared context windows.
 
-> Give AI coding agents infinite memory. 3-layer context system + parallel agent orchestration using Obsidian.
+> Your computer solved the memory problem 50 years ago: small-fast-always-loaded on top, big-slow-persistent on bottom, pointers in between. We applied the same architecture to AI coding agents — and it works.
 
 ---
 
@@ -44,6 +44,63 @@ Use Obsidian as a persistent, structured knowledge layer that sits between you a
 |  +-------+ +-------+ +-------+ +-------+   |
 +---------------------------------------------+
 ```
+
+## Why This Works (stolen from your computer)
+
+Your computer solved this exact problem 50 years ago.
+
+A CPU has tiny, fast registers. It can't hold your entire program. So computer scientists invented a **memory hierarchy** — small-and-fast at the top, large-and-slow at the bottom, with pointers connecting them:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     YOUR COMPUTER                               │
+│                                                                 │
+│  CPU Registers    4 KB     Instant     Always loaded            │
+│       ↕                                                         │
+│  L1/L2 Cache     16 MB    Fast        Recently used data        │
+│       ↕                                                         │
+│  RAM             32 GB    On demand   Programs + open files     │
+│       ↕                                                         │
+│  Hard Drive      2 TB     On demand   Everything else           │
+│                                                                 │
+│  The CPU doesn't store everything. It LOADS what it needs,      │
+│  WORKS on it, and SAVES results back. Pointers tell it          │
+│  where to find things. Nothing is ever truly lost.              │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                     YOUR AI ASSISTANT                            │
+│                                                                 │
+│  CLAUDE.md        ~50 lines   Every msg   Rules + pointers      │
+│       ↕                                                         │
+│  MEMORY.md        ~30 lines   Every msg   Index to knowledge    │
+│       ↕                                                         │
+│  Context Window   200K tokens On demand   Current work          │
+│       ↕                                                         │
+│  Obsidian Vault   Unlimited   On demand   Everything else       │
+│                                                                 │
+│  Claude doesn't memorize everything. It READS what it needs,    │
+│  WORKS on it, and WRITES discoveries back. Pointers tell it     │
+│  where to find things. Nothing is ever truly lost.              │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+The parallel is exact:
+
+| Computer | AI Assistant | Role |
+|----------|-------------|------|
+| CPU Registers | CLAUDE.md | Tiny, always loaded, critical instructions |
+| L1/L2 Cache | MEMORY.md | Small index, points to bigger storage |
+| RAM | Context window | Working memory — holds what you're actively using |
+| Hard Drive | Obsidian vault | Persistent, unlimited, survives reboots (sessions) |
+| Virtual Memory | Pointer system | Makes finite RAM feel infinite by swapping to disk |
+| Multi-core CPU | Parallel agents | Multiple workers, each with own registers + cache |
+
+**Your computer doesn't have infinite RAM. It has infinite *storage* and smart *memory management* that makes RAM feel infinite.** That's exactly what this system does for AI context windows.
+
+When your computer runs low on RAM, it pages data to disk and loads it back when needed. When Claude's context compacts, it loses details — but the knowledge is safe in Obsidian, ready to be loaded back. **The context window is the bottleneck. Obsidian removes the bottleneck.**
+
+> We didn't invent a bigger context window. We gave AI the same memory architecture that made computers powerful — and for the same reason: **the smartest system isn't the one with the most memory, it's the one that knows where to find what it needs.**
 
 ## The 3-Layer Memory System
 
@@ -332,4 +389,4 @@ MIT — use it however you want.
 
 ---
 
-*Built by shipping a real product with 13 parallel AI agents. Not a theoretical framework — a battle-tested workflow.*
+*Computers don't have infinite RAM — they have memory hierarchies that make RAM feel infinite. We gave AI the same trick. Built by shipping a real product with 13 parallel agents, not in a lab.*
