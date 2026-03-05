@@ -47,9 +47,24 @@ npm test           # run tests
 
 ---
 
+## Slash Commands (optional)
+
+Add these to your CLAUDE.md to enable quick context loading:
+
+```markdown
+## Slash Commands
+- When I say "/context": Read from Obsidian: `[Project]/Project Overview.md`, `[Project]/Architecture.md`, `[Project]/Gotchas.md`. Summarize, then ask what to work on.
+- When I say "/audit": Read from Obsidian: `[Project]/Build/Audit Report.md`, `[Project]/Build/Build Plan.md`. Show priorities.
+- When I say "/learn": Write session discoveries to the relevant Obsidian doc (Gotchas, Patterns, or Decisions).
+```
+
+---
+
 ## Tips
 
-1. **Don't duplicate Obsidian here** -- point to it
-2. **Credentials are fine here** -- this is for dev/demo only
-3. **Shell gotchas save the most time** -- Claude hits them every session
-4. **Rules prevent repeated mistakes** -- add one whenever Claude gets something wrong twice
+1. **Keep it under 50 lines** -- every line costs tokens on every message (~3 tokens/line × 80 messages = 240 tokens per line per session)
+2. **Don't duplicate Obsidian here** -- point to it
+3. **Credentials are fine here** -- this is for dev/demo only
+4. **Shell gotchas save the most time** -- Claude hits them every session
+5. **Rules prevent repeated mistakes** -- add one whenever Claude gets something wrong twice
+6. **Slash commands are free** -- they only cost tokens when invoked, not every message

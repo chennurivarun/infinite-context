@@ -47,11 +47,24 @@ Use Obsidian as a persistent, structured knowledge layer that sits between you a
 
 ## The 3-Layer Memory System
 
-| Layer | Auto-loaded | Size limit | Token cost | Best for |
-|-------|-------------|-----------|------------|----------|
-| **CLAUDE.md** | Every message | ~100 lines | ~500/msg | Build commands, credentials, rules |
-| **MEMORY.md** | Every message | ~50 lines | ~300/msg | **Pointers** to Obsidian docs |
-| **Obsidian** | On demand | **Unlimited** | **0 until read** | Architecture, design, agent scopes, results |
+### What loads automatically (every session, no effort)
+
+| Layer | Lines | ~Tokens/msg | What Claude knows |
+|-------|-------|-------------|-------------------|
+| **CLAUDE.md** | ~50 | ~160 | Build commands, hard rules, "read Obsidian on first task" |
+| **MEMORY.md** | ~30 | ~110 | Pointers to all docs, current status, blockers |
+| **Total overhead** | **~80** | **~270** | **Enough to start smart, not enough to waste** |
+
+### What loads on demand (zero cost until needed)
+
+| Obsidian Doc | ~Tokens | When Claude reads it |
+|-------------|---------|---------------------|
+| Project Overview | ~800 | First task (auto, CLAUDE.md says to) |
+| Architecture | ~2,500 | When touching code structure, DB, routing |
+| Gotchas | ~1,600 | When something might break |
+| Patterns | ~1,400 | When writing new code |
+| Decisions | ~1,500 | When making architecture choices |
+| Build Plan | ~2,400 | When planning what to build next |
 
 The key insight: **MEMORY.md is an index, not storage.** It points to Obsidian docs. Claude reads them only when needed.
 
@@ -75,6 +88,18 @@ State is managed by Zustand stores in shared/stores/...
 ```
 
 6 lines vs 50+. Same information accessible. **90% fewer tokens per message.**
+
+### Slash commands (optional power-ups)
+
+Add these to your CLAUDE.md for instant context loading:
+
+| Command | What it does |
+|---------|-------------|
+| `/context` | Reads Overview + Architecture + Gotchas — full context in one shot |
+| `/audit` | Reads audit report + build plan — shows what's broken and priorities |
+| `/learn` | Writes session discoveries back to Obsidian — next session starts smarter |
+
+These are just [Claude Code custom slash commands](https://docs.anthropic.com/en/docs/claude-code) that trigger Obsidian MCP reads. See the [Setup Guide](vault-template/Setup%20Guide.md) for how to create them.
 
 ## Parallel Agent Orchestration
 
@@ -107,6 +132,34 @@ Each agent gets its **own 200K context window**. 5 agents = **1M tokens of work 
 3. **Read scope from Obsidian** — keeps orchestrator context lean
 4. **Write results to Obsidian** — persistence across sessions
 5. **Foundation before parallel** — fix shared code first, then parallelize
+
+## How It Solves Every Claude Memory Problem
+
+| Problem | Old way | With infinite-context |
+|---------|---------|----------------------|
+| "Claude forgot what we built" | Re-explain every session | CLAUDE.md auto-reads Obsidian on first task |
+| "Context window full of old stuff" | 90+ line MEMORY.md burning 400 tokens/msg | 30-line pointers, ~110 tokens/msg |
+| "Agent doesn't know the codebase" | Paste context inline (bloats orchestrator) | Agent reads from Obsidian (own 200K window) |
+| "Learned something but lost it next session" | Hope MEMORY.md picks it up | Write to Obsidian explicitly (or `/learn`) |
+| "Need full context NOW" | Explain everything manually | Type `/context` — reads 3 docs in one shot |
+| "Claude uses wrong library/pattern" | Correct it every time | Hard rule in CLAUDE.md (auto-loaded) |
+
+### Token savings in practice
+
+For a typical **80-message session**:
+
+```
+OLD:  90-line MEMORY.md × 80 messages  = ~32,000 tokens on memory overhead
+NEW:  30-line MEMORY.md × 80 messages  =  ~8,800 tokens on memory overhead
+      + 1 Obsidian read (Overview)      =    ~800 tokens (once)
+      + 1 deeper read (Architecture)    =  ~2,500 tokens (once)
+                                         ─────────
+      TOTAL                             = ~12,100 tokens
+
+SAVINGS: ~20,000 tokens per session (62%)
+```
+
+That's 20K tokens freed up for **actual work** instead of re-reading context Claude already has.
 
 ## Real-World Results
 

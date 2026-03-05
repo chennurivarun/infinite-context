@@ -214,7 +214,47 @@ This creates a **feedback loop**: Claude reads knowledge -> works -> discovers n
 
 ---
 
-## Step 7: Parallel Agents (optional, for large tasks)
+## Step 7: Add Slash Commands (optional, saves time)
+
+Create custom slash commands that load Obsidian context in one shot. Add these as Claude Code custom commands in your project:
+
+### /context — Full project context
+```
+Read the following from Obsidian using MCP:
+1. MyProject/Project Overview.md
+2. MyProject/Architecture.md
+3. MyProject/Gotchas.md
+Summarize what you now know. Then ask what I want to work on.
+```
+
+### /audit — Current issues and priorities
+```
+Read the following from Obsidian using MCP:
+1. MyProject/Build/Audit Report.md (or latest audit results)
+2. MyProject/Build/Build Plan.md
+Show me: what's broken, what's the priority order, and what's the next fix wave.
+```
+
+### /learn — Write discoveries back
+```
+Review what we discovered in this session:
+- New gotchas, patterns, or decisions
+- Anything that would help future sessions
+Write each discovery to the relevant Obsidian doc:
+- Gotchas -> MyProject/Gotchas.md
+- Patterns -> MyProject/Patterns.md
+- Decisions -> MyProject/Decisions.md
+Confirm what you wrote.
+```
+
+These are just prompts that trigger Obsidian reads/writes. You can create them as:
+- Claude Code custom slash commands (if supported)
+- Snippets you paste when needed
+- Instructions in CLAUDE.md (e.g., "When I say /context, read these 3 docs")
+
+---
+
+## Step 8: Parallel Agents (optional, for large tasks)
 
 When you have a big task (many files, multiple independent fixes), use parallel agents:
 

@@ -102,12 +102,30 @@ Claude Code compresses old messages as context fills up. But you can maximize us
 
 | Action | Token cost | Notes |
 |--------|-----------|-------|
-| CLAUDE.md loaded | ~500-2K | Every message, keep it lean |
-| MEMORY.md loaded | ~300-1K | Every message, use as pointers |
-| Read one Obsidian doc | ~1-5K | On demand, one-time per doc |
+| CLAUDE.md loaded | ~160/msg | Keep under 50 lines |
+| MEMORY.md loaded | ~110/msg | Keep under 30 lines, pointers only |
+| Read one Obsidian doc | ~800-2,500 | On demand, one-time per doc |
 | Read a source file | ~1-10K | Depends on file size |
 | Agent dispatch | ~2K prompt | Agent gets its own context window |
 | Agent result | ~1-3K | Summary returned to orchestrator |
+
+### Concrete savings: 80-message session
+
+```
+OLD approach (content in MEMORY.md):
+  90-line MEMORY.md × 80 messages = ~32,000 tokens on overhead
+
+NEW approach (pointers in MEMORY.md):
+  30-line MEMORY.md × 80 messages =  ~8,800 tokens on overhead
+  + 1 Obsidian read (Overview)    =    ~800 tokens (once)
+  + 1 deeper read (Architecture)  =  ~2,500 tokens (once)
+                                    ─────────
+  TOTAL                           = ~12,100 tokens
+
+SAVINGS: ~20,000 tokens per session (62%)
+```
+
+That's 20K tokens freed for actual coding instead of re-reading context.
 
 ### The agent advantage
 
