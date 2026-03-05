@@ -110,7 +110,7 @@ Each agent gets its **own 200K context window**. 5 agents = **1M tokens of work 
 
 ## Real-World Results
 
-Tested on a **687-user-story React Native app** (automotive dealer management system):
+Tested on a **687-user-story React Native app** (180+ screens, 9 user roles):
 
 | Metric | Result |
 |--------|--------|
@@ -195,7 +195,6 @@ vault-template/
   Agent Rules.md                <- 5 rules, scope templates, failure prevention
   MEMORY.md Template.md         <- How to use pointers (not storage)
   CLAUDE.md Template.md         <- What goes in your repo's CLAUDE.md
-  CLAUDE.md Template.md         <- What goes in your repo's CLAUDE.md
   Project Overview.md           <- Fill-in template
   Architecture.md               <- Fill-in template
   Design System.md              <- Fill-in template
@@ -206,7 +205,7 @@ vault-template/
     Build Plan.md               <- Build order + agent scope guide
 
 examples/
-  cyepro-sanitized/             <- Real-world example with full stats
+  real-world-example/           <- Real-world example with full stats
 ```
 
 ## Key Guides
@@ -218,7 +217,7 @@ examples/
 | [Agent Rules](vault-template/Agent%20Rules.md) | How to write agent scopes, dispatch parallel waves, prevent failures |
 | [MEMORY.md as Pointers](vault-template/MEMORY.md%20Template.md) | Turn MEMORY.md into an index (not a dumping ground) |
 | [CLAUDE.md Template](vault-template/CLAUDE.md%20Template.md) | What belongs in your repo's auto-loaded instructions |
-| [Real Example](examples/cyepro-sanitized/) | How this workflow built a 180+ screen app |
+| [Real Example](examples/real-world-example/) | How this workflow built a 180+ screen app |
 
 ## How It Works (the feedback loop)
 
@@ -281,4 +280,3 @@ MIT — use it however you want.
 ---
 
 *Built by shipping a real product with 13 parallel AI agents. Not a theoretical framework — a battle-tested workflow.*
-# infinite-context-

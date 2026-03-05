@@ -1,6 +1,6 @@
-# Example: Cyepro DMS Mobile App
+# Example: Real-World Production App
 
-A real-world example of vault-driven development on a 687-user-story React Native app for automotive dealer management.
+A real-world example of infinite-context on a 687-user-story React Native app for enterprise dealer management.
 
 ## Project Stats
 - **Tech**: Expo Router + Zustand + TanStack Query + Drizzle ORM
@@ -14,7 +14,7 @@ A real-world example of vault-driven development on a 687-user-story React Nativ
 ### During Build (9 waves)
 ```
 Obsidian Vault:
-  Cyepro/Mobile App 2.0/
+  MyProject/
     Architecture.md           <- code structure, stores, routing
     Design System.md          <- colors, fonts, spacing rules
     Build/
@@ -33,7 +33,7 @@ Each wave had 2-6 agents running in parallel. Agents read scopes from Obsidian, 
 ### During Audit
 ```
 Obsidian Vault:
-  Cyepro/Mobile App 2.0/
+  MyProject/
     Build/
       Audit Wave/
         Agent AUD1.md         <- scope: sales flow audit
@@ -49,14 +49,14 @@ Obsidian Vault:
 ### During Fix Waves
 ```
 Obsidian Vault:
-  Cyepro/Mobile App 2.0/
+  MyProject/
     Build/
       Fix Waves/
         Foundation Agent.md   <- scope: shared data fixes (ran alone first)
         Foundation Results.md
         FA1 Results.md        <- customer auth fix
-        FA2 Results.md        <- leads isolation fix
-        FA3 Results.md        <- brand cleanup
+        FA2 Results.md        <- data isolation fix
+        FA3 Results.md        <- data cleanup
         FA4 Results.md        <- missing hook fix
         FB1-FB3 Results.md    <- role isolation fixes
         FC1-FC3 Results.md    <- core logic fixes
@@ -66,43 +66,43 @@ Obsidian Vault:
 
 ### MEMORY.md (what was loaded every message)
 ```markdown
-# Cyepro DMS Mobile App 2.0 -- Memory
+# MyProject -- Memory
 
 ## Project
-- Expo Router React Native app for Kia India dealer management
+- Expo Router React Native app for enterprise dealer management
 - 687 user stories across 4 modules (Admin, Sales, Inventory, Service)
 
 ## Architecture (pointer)
-- Full docs -> Obsidian: `Cyepro/Mobile App 2.0/Architecture.md`
-- Stores: auth-store, leads-store, lead-wizard-store, filter-store, customer-store
+- Full docs -> Obsidian: `MyProject/Architecture.md`
+- Stores: auth-store, leads-store, wizard-store, filter-store, customer-store
 - Routing: Expo Router file-based
 
 ## Design System (pointer)
-- Full docs -> Obsidian: `Cyepro/Mobile App 2.0/Design System.md`
+- Full docs -> Obsidian: `MyProject/Design System.md`
 - Light theme, Geist fonts, borderRadius 16
 
 ## Gotchas
 - zsh: always quote paths with parens: "app/(tabs)/file.tsx"
 - TypeScript: npx tsc --noEmit --skipLibCheck
-- Mock data: production-realistic Indian automotive (Kia India, INR prices)
+- Mock data: production-realistic with local currency pricing
 ```
 
 ~20 lines. Full context accessible via Obsidian pointers. Loaded cheaply every message.
 
 ### CLAUDE.md (what was in the repo)
 ```markdown
-# Cyepro DMS -- Claude Project Instructions
+# MyProject -- Claude Project Instructions
 
 ## Design System (summary only -- full in Obsidian)
 Colors: background=#F6F6F8, surface=#FFFFFF, textPrimary=#1A1A1A, accent=#1A1A1A
 Fonts: Geist_600SemiBold (headings), Geist_400Regular (body), GeistMono_500Medium (numbers)
 
 ## Demo Credentials
-| Role | Employee ID | Password |
+| Role | ID | Password |
 |------|------------|----------|
-| DSE | EMP-2847 | dse123 |
+| Sales Consultant | EMP-2847 | dse123 |
 | Team Lead | EMP-1234 | tl123 |
-| Sales Manager | EMP-0001 | sm123 |
+| Manager | EMP-0001 | sm123 |
 
 ## Shell Gotchas
 - zsh glob: always quote paths with parens
